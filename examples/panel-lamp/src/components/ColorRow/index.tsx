@@ -1,11 +1,10 @@
 /* eslint-disable react/require-default-props */
 import { Text, View } from '@ray-js/ray';
-import _cloneDeep from 'lodash/cloneDeep';
 import React, { useEffect, useState, useRef } from 'react';
 import { utils } from '@ray-js/panel-sdk';
+import OpacitySlider from '@ray-js/lamp-style-slider';
 import useThrottleFn from '@/hooks/useThrottleFn';
 import Strings from '@/i18n';
-import { OpacitySlider } from '@/components';
 import { useSelector } from '@/redux';
 import styles from './index.module.less';
 
@@ -18,7 +17,7 @@ interface IProps {
   label: string;
   background?: string;
   onMove?: (v: string, label: string) => void;
-  onEnd: (v: string, label: string) => void
+  onEnd: (v: string, label: string) => void;
 }
 export const ColorRow = React.memo((props: IProps) => {
   const themeColor = useSelector(state => state.uiState.themeColor);
@@ -72,7 +71,7 @@ export const ColorRow = React.memo((props: IProps) => {
         }}
         onTouchMove={handleMove}
         onTouchEnd={handleEnd}
-        background={background}
+        trackBackgroundColor={background}
         thumbStyle={{
           backgroundColor: label === 'hue' ? hsv2rgbString(currentVal, 100, 100) : 'transparent',
         }}
