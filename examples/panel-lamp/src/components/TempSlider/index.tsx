@@ -1,8 +1,9 @@
 /* eslint-disable react/require-default-props */
 import React, { useEffect, useState, useRef } from 'react';
+import OpacitySlider from '@ray-js/lamp-style-slider';
+import { useSelector } from '@/redux';
 import useThrottleFn from '@/hooks/useThrottleFn';
 import { formatPercent } from '@/utils';
-import { OpacitySlider } from '@/components';
 import Strings from '@/i18n';
 
 interface IProps {
@@ -17,6 +18,7 @@ interface IProps {
 export const TempSlider = React.memo((props: IProps) => {
   const { value, disable = false, trackStyle, style, onTouchMove, onTouchEnd } = props;
 
+  const themeColor = useSelector(state => state.uiState.themeColor);
   const [textVal, setTextVal] = useState('');
   const move = useRef(false);
 
@@ -48,12 +50,14 @@ export const TempSlider = React.memo((props: IProps) => {
       style={style}
       label={Strings.getLang('temp')}
       textValue={textVal}
+      valueStyle={{ color: themeColor }}
       disable={disable}
       value={value}
+      enableTouch
       trackStyle={trackStyle}
       onTouchMove={handleMove}
       onTouchEnd={handleEnd}
-      background="linear-gradient(270deg, #CDECFE 1.22%, #FFFFFF 45.36%, #FFFFFF 53.27%, #FFCA5C 98.32%)"
+      trackBackgroundColor="linear-gradient(270deg, #CDECFE 1.22%, #FFFFFF 45.36%, #FFFFFF 53.27%, #FFCA5C 98.32%)"
       thumbStyle={{
         backgroundColor: disable ? '#000' : 'transparent',
       }}

@@ -2,9 +2,9 @@
 import { Text, View } from '@ray-js/ray';
 import React, { useEffect, useState, useRef } from 'react';
 import { utils } from '@ray-js/panel-sdk';
+import OpacitySlider from '@ray-js/lamp-style-slider';
 import useThrottleFn from '@/hooks/useThrottleFn';
 import Strings from '@/i18n';
-import { OpacitySlider } from '@/components';
 import { useSelector } from '@/redux';
 import styles from './index.module.less';
 
@@ -71,7 +71,7 @@ export const ColorRow = React.memo((props: IProps) => {
         }}
         onTouchMove={handleMove}
         onTouchEnd={handleEnd}
-        background={background}
+        trackBackgroundColor={background}
         thumbStyle={{
           backgroundColor: label === 'hue' ? hsv2rgbString(currentVal, 100, 100) : 'transparent',
         }}
