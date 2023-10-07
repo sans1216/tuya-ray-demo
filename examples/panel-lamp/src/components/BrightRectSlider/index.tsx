@@ -1,22 +1,21 @@
 /* eslint-disable react/require-default-props */
 import React, { useEffect, useState, useRef } from 'react';
 import { View, Text } from '@ray-js/ray';
+import OpacitySlider from '@ray-js/lamp-style-slider';
 import { formatPercent } from '@/utils';
 import Strings from '@/i18n';
 import useThrottleFn from '@/hooks/useThrottleFn';
 import colorUtils from '@/utils/color.js';
 import { useSelector } from '@/redux';
 import styles from './index.module.less';
-import { OpacitySlider } from '@/components';
+// import { OpacitySlider } from '@/components';
 
 const { brightKelvin2rgb } = colorUtils;
 interface BrightRectSliderProps {
   disable?: boolean;
   value: number;
   sliderHeight?: number;
-  isUserMode?: boolean;
   containerStyle?: React.CSSProperties;
-  step?: number;
   min?: number;
   max?: number;
   maxTrackWidth?: string;
@@ -28,12 +27,10 @@ export const BrightRectSlider = (props: BrightRectSliderProps) => {
   const {
     containerStyle,
     value,
-    step,
     min = 10,
     max = 1000,
     sliderHeight,
     maxTrackWidth,
-    isUserMode = true,
     onChange,
     onRelease,
     disable = false,
@@ -88,19 +85,25 @@ export const BrightRectSlider = (props: BrightRectSliderProps) => {
 
   return (
     <View>
-      {!isUserMode && renderTextRow()}
+      {renderTextRow()}
       <View className={styles.container} style={{ ...containerStyle, opacity: disable ? 0.4 : 1 }}>
         <OpacitySlider
+          enableTouch
           disable={disable}
           min={10}
           max={1000}
           textValue={textVal}
           value={Math.max(min, value)}
-          trackStyle={{ width: maxTrackWidth, height: `${sliderHeight}rpx` }}
+          trackStyle={{
+            width: `${maxTrackWidth}`,
+            height: `${sliderHeight}rpx`,
+          }}
+          thumbStyle={{
+            backgroundColor: brightKelvin2rgb(currentBright, 600),
+          }}
           onTouchMove={handleSliderMove}
           onTouchEnd={handleSliderEnd}
-          background="linear-gradient(270deg, #FFFFFF 2.57%, rgba(255, 255, 255, 0) 100.64%)"
-          thumbStyle={{ backgroundColor: brightKelvin2rgb(currentBright, 600) }}
+          trackBackgroundColor="linear-gradient(270deg, #FFFFFF 2.57%, rgba(255, 255, 255, 0) 100.64%)"
         />
       </View>
     </View>
